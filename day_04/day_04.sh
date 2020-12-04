@@ -18,13 +18,17 @@ awk -F '[ :]' '
             valid = valid && pass["iyr"] >= 2010 && pass["iyr"] <= 2020
             valid = valid && pass["eyr"] >= 2020 && pass["eyr"] <= 2030
 
-            match(pass["hgt"], /^([0-9]+)(cm|in)$/, hgt)
-            valid = valid && (hgt[2] == "cm" || hgt[2] == "in")
-            if (hgt[2] == "cm") {
-                valid = valid && hgt[1] >= 150 && hgt[1] <= 193
+            hgt_val = hgt_unit = ""
+            if (pass["hgt"] ~ /^([0-9]+)(cm|in)$/) {
+                hgt_val = substr(pass["hgt"], 1, length(pass["hgt"]) - 2)
+                hgt_unit = substr(pass["hgt"], length(pass["hgt"]) - 1)
             }
-            if (hgt[2] == "in") {
-                valid = valid && hgt[1] >= 59 && hgt[1] <= 76
+            valid = valid && (hgt_unit == "cm" || hgt_unit == "in")
+            if (hgt_unit == "cm") {
+                valid = valid && hgt_val >= 150 && hgt_val <= 193
+            }
+            if (hgt_unit == "in") {
+                valid = valid && hgt_val >= 59 && hgt_val <= 76
             }
 
             valid = valid && pass["hcl"] ~ /^#[0-9a-f]{6}$/
