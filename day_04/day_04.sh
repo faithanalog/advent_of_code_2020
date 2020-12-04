@@ -27,9 +27,9 @@ awk -F '[ :]' '
                 valid = valid && hgt[1] >= 59 && hgt[1] <= 76
             }
 
-            valid = valid && match(pass["hcl"], /^#[0-9a-f]{6}$/) > 0
-            valid = valid && match(pass["ecl"], /^(amb|blu|brn|gry|grn|hzl|oth)$/) > 0
-            valid = valid && match(pass["pid"], /^[0-9]{9}$/) > 0
+            valid = valid && pass["hcl"] ~ /^#[0-9a-f]{6}$/
+            valid = valid && pass["ecl"] ~ /^(amb|blu|brn|gry|grn|hzl|oth)$/
+            valid = valid && pass["pid"] ~ /^[0-9]{9}$/
 
             if (valid) {
                 part2++
