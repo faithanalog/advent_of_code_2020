@@ -1,6 +1,7 @@
 #!/bin/sh
 
 # Specialized to gawk because some awks implement locals statically, which breaks recursion.
+# Given i'm using gawk anyway, i also use the gnu extension that adds length() for arrays
 cat input.txt \
     | sed '
         s/ bags\?//g
@@ -47,11 +48,7 @@ cat input.txt \
 
         END {
             get_parents_of("shiny" "gold")
-            n = 0
-            for (bag in target_parents) {
-                n++
-            }
-            print "Part 1: " n
+            print "Part 1: " length(target_parents)
             print "Part 2: " count_children_of("shiny" "gold")
         }
     '
