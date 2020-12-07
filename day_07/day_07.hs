@@ -58,7 +58,11 @@ parseBags :: Parser (BagParents, BagChildren)
 parseBags = do
   inToOutMappings <- Atto.sepBy1 parseOneBag "\n"
   let children = Map.fromList inToOutMappings
-      parents = foldr1 (.) [insertParents outer (map fst inners) | (outer, inners) <- inToOutMappings] Map.empty
+      parents =
+        foldr1
+          (.)
+          [insertParents outer (map fst inners) | (outer, inners) <- inToOutMappings]
+          Map.empty
   return (parents, children)
 
 parentsOf :: BagParents -> Text -> Set Text
