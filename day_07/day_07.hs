@@ -63,10 +63,8 @@ parseBags = do
 
 parentsOf :: BagParents -> Text -> Set Text
 parentsOf bags target =
-  let recurse nextSource
-        | nextSource == target = Set.singleton nextSource
-        | otherwise = Set.singleton nextSource <> foldMap recurse (Map.findWithDefault [] nextSource bags)
-   in foldMap recurse (Map.findWithDefault [] target bags)
+  let parents = Map.findWithDefault [] target bags
+   in Set.fromList parents <> foldMap (parentsOf bags) parents
 
 countChildrenOf :: BagChildren -> Text -> Int
 countChildrenOf bags target =
