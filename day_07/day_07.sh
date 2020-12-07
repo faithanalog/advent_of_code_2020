@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Specialized to gawk because some awks implement locals statically, which breaks recursion.
+# Specialized to gawk because some awks implement local arrays statically, which breaks recursion.
 # Given i'm using gawk anyway, i also use the gnu extension that adds length() for arrays
 cat input.txt \
     | sed '
