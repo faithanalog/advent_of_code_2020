@@ -4,13 +4,13 @@ import Data.List (sort, tails)
 
 -- takes a sorted descending list
 calc :: [Int] -> Int
-calc xs = cc ! head xs
-  where
-    cc =
-      IntMap.fromList
-        [(head xtail, count xtail) | xtail <- init (tails xs)]
-    count [0] = 1
-    count (a : xs) = sum [cc ! b | b <- take 3 xs, a - b <= 3]
+calc xs =
+  let cc =
+        IntMap.fromList
+          [(head xtail, count xtail) | xtail <- init (tails xs)]
+      count [0] = 1
+      count (a : xs) = sum [cc ! b | b <- take 3 xs, a - b <= 3]
+   in cc ! head xs
 
 main :: IO ()
 main = do
