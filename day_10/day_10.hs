@@ -1,5 +1,5 @@
-import Data.Array ((!))
-import qualified Data.Array as Array
+import Data.IntMap ((!))
+import qualified Data.IntMap.Lazy as IntMap
 import Data.List (sort, tails)
 
 -- takes a sorted descending list
@@ -7,8 +7,7 @@ calc :: [Int] -> Int
 calc xs = cc ! head xs
   where
     cc =
-      Array.array
-        (last xs, head xs)
+      IntMap.fromList
         [(head xtail, count xtail) | xtail <- init (tails xs)]
     count [0] = 1
     count (a : xs) = sum [cc ! b | b <- take 3 xs, a - b <= 3]
